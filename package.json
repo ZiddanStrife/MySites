@@ -6,7 +6,7 @@
   "scripts": {
     "test": "firebase deploy",
     "build": "webpack",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open --inline"
   },
   "repository": {
     "type": "git",

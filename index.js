@@ -1,13 +1,14 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import BaseApi from "./src/firebaseAssync.js";
+import LoginApi from "./V1/service/loginApi.js"; 
 
 var app = firebase.initializeApp({
     apiKey: "AIzaSyAv3S0kbtfgfsfPkHnm73hHgvWsOHvNezE",
-    authDomain: "explore-life-online.firebaseapp.com",
-    databaseURL: "https://explore-life-online.firebaseio.com",
-    projectId: "explore-life-online",
-    storageBucket: "explore-life-online.appspot.com",
+    authDomain: "revolutionary-people.firebaseapp.com",
+    databaseURL: "https://revolutionary-people.firebaseio.com",
+    projectId: "revolutionary-people",
+    storageBucket: "revolutionary-people.appspot.com",
     messagingSenderId: "",
     appID: "",
 });
@@ -16,6 +17,9 @@ window.$z = {
     BaseApi : ()=>{
         return new BaseApi(firebase);
     },
+    LoginApi: ()=>{
+        return LoginApi;
+    }
 }
 
 window.db = window.$z.BaseApi();

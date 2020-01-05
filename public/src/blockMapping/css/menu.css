@@ -1,0 +1,16 @@
+.menu-js{
+    display: inline-block;
+    border: 1px solid black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: white;
+    z-index: 1000;
+    padding: 1px 5px;
+    min-width: 100px;
+    border-radius: 5px;
+}
+.menu-js div{
+    font-size: medium;
+    font-family: Roboto;
+}

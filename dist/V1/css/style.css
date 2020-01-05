@@ -503,7 +503,7 @@
     vertical-align: middle;
 }
 
-.form-3 input[type=submit] {
+.form-3 input[type=submit],  .form-3 .submit{
     /* Width and position */
     width: 100%;
     padding: 8px 5px;
@@ -526,11 +526,11 @@
     text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
 }
 
-.form-3 input[type=submit]:hover { 
+.form-3 input[type=submit]:hover ,   .form-3 .submit:hover{ 
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-.form-3 input[type=submit]:active { 
+.form-3 input[type=submit]:active , ,  .form-3 .submit:active{ 
     background: #287db5;
     box-shadow: inset 0 0 3px rgba(0,0,0,0.6);
     border-color: #000; /* Fallback */

@@ -7,7 +7,7 @@ module.exports = {
     },
     plugins: [
       new CopyPlugin([
-        { from: 'dist', to: "../production" },
+        { from: 'dist', to: "../public" },
       ]),
       new CopyPlugin([
         { from: 'V1', to: 'V1' },
@@ -18,8 +18,8 @@ module.exports = {
     mode: "development",
     devServer: {
       // contentBase: './production',
-      contentBase: path.join(__dirname, 'production'),
-      compress: true,
+      contentBase: [path.join(__dirname, 'public'), path.join(__dirname, 'dist')],
+      compress: false,
       port: 2121,
       allowedHosts: [
         // 'host.com',

@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./V1/service/loginApi.js":
+/*!********************************!*\
+  !*** ./V1/service/loginApi.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nclass LoginApi{\r\n    static login(BaseApi, data , onSuccess){\r\n        return BaseApi.getData('users/'.concat(data.userName, \"_\", btoa(data.password)), onSuccess);\r\n    }\r\n}\r\n/* harmony default export */ __webpack_exports__[\"default\"] = (LoginApi);\n\n//# sourceURL=webpack:///./V1/service/loginApi.js?");
+
+/***/ }),
+
 /***/ "./index.js":
 /*!******************!*\
   !*** ./index.js ***!
@@ -94,7 +106,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ \"./node_modules/firebase/app/dist/index.cjs.js\");\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var firebase_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/database */ \"./node_modules/firebase/database/dist/index.esm.js\");\n/* harmony import */ var _src_firebaseAssync_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/firebaseAssync.js */ \"./src/firebaseAssync.js\");\n\r\n\r\n\r\n\r\nvar app = firebase_app__WEBPACK_IMPORTED_MODULE_0__[\"initializeApp\"]({\r\n    apiKey: \"AIzaSyAv3S0kbtfgfsfPkHnm73hHgvWsOHvNezE\",\r\n    authDomain: \"explore-life-online.firebaseapp.com\",\r\n    databaseURL: \"https://explore-life-online.firebaseio.com\",\r\n    projectId: \"explore-life-online\",\r\n    storageBucket: \"explore-life-online.appspot.com\",\r\n    messagingSenderId: \"\",\r\n    appID: \"\",\r\n});\r\n\r\nwindow.$z = {\r\n    BaseApi : ()=>{\r\n        return new _src_firebaseAssync_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"](firebase_app__WEBPACK_IMPORTED_MODULE_0__);\r\n    },\r\n}\r\n\r\nwindow.db = window.$z.BaseApi();\r\n\r\n\r\n// $z.BaseApi().activateRealtime('player_data', (res)=>{\r\n//     if(res.length == undefined){\r\n\r\n//     }else{\r\n//         console.log('updated', res.length);\r\n//     }\r\n// })\n\n//# sourceURL=webpack:///./index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/app */ \"./node_modules/firebase/app/dist/index.cjs.js\");\n/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var firebase_database__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! firebase/database */ \"./node_modules/firebase/database/dist/index.esm.js\");\n/* harmony import */ var _src_firebaseAssync_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/firebaseAssync.js */ \"./src/firebaseAssync.js\");\n/* harmony import */ var _V1_service_loginApi_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./V1/service/loginApi.js */ \"./V1/service/loginApi.js\");\n\r\n\r\n\r\n \r\n\r\nvar app = firebase_app__WEBPACK_IMPORTED_MODULE_0__[\"initializeApp\"]({\r\n    apiKey: \"AIzaSyAv3S0kbtfgfsfPkHnm73hHgvWsOHvNezE\",\r\n    authDomain: \"revolutionary-people.firebaseapp.com\",\r\n    databaseURL: \"https://revolutionary-people.firebaseio.com\",\r\n    projectId: \"revolutionary-people\",\r\n    storageBucket: \"revolutionary-people.appspot.com\",\r\n    messagingSenderId: \"\",\r\n    appID: \"\",\r\n});\r\n\r\nwindow.$z = {\r\n    BaseApi : ()=>{\r\n        return new _src_firebaseAssync_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"](firebase_app__WEBPACK_IMPORTED_MODULE_0__);\r\n    },\r\n    LoginApi: ()=>{\r\n        return _V1_service_loginApi_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"];\r\n    }\r\n}\r\n\r\nwindow.db = window.$z.BaseApi();\r\n\r\n\r\n// $z.BaseApi().activateRealtime('player_data', (res)=>{\r\n//     if(res.length == undefined){\r\n\r\n//     }else{\r\n//         console.log('updated', res.length);\r\n//     }\r\n// })\n\n//# sourceURL=webpack:///./index.js?");
 
 /***/ }),
 
