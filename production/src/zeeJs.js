@@ -1,7 +1,12 @@
 var zeeJs = {
 
 }
-
+function select(selector){
+    return document.querySelector(selector)
+}
+function valuateData(selection){
+    return selection;
+}
 function importFile(url, callback){
     let objFile = new XMLHttpRequest();
     objFile.onreadystatechange = function(res){
@@ -22,8 +27,10 @@ function importAll(){
             let obj = document.createElement('div');
             obj.innerHTML = el;
             if(obj.children.length < 1)return console.log('import-el', 'With id', imp.id, "not have html element to render");
-            imp.parentElement.appendChild(obj.children[0])
-            
+            imp.parentElement.appendChild(obj.children[0]);
+            if(imp.parentElement.lastElementChild.children[imp.parentElement.lastElementChild.children.length-1].tagName == "SCRIPT"){
+                eval(imp.parentElement.lastElementChild.children[imp.parentElement.lastElementChild.children.length-1].innerText);
+            }
             let selectIdx = imp.parentElement.children.deleteUsingEquality(item=>{
                 if(item.attributes.src !== undefined){
                     return item.attributes.src.value == imp.attributes.src.value && item.id == imp.id;
