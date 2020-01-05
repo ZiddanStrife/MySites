@@ -22,25 +22,31 @@ var _blockMapObj = {
         }
         return position;
     },
-    moveListener: (x, y, blockObj, block)=>{
-        let floater = select('.block-mapping-floater');
-        floater.style.display = 'inline-block';
-        let top = (x+1)*blockObj.size.xSize + "px", left = (y+1)*blockObj.size.ySize + "px";
+    moveListener: (x, y, blockObj, block, mapObj)=>{
+        if(mapObj.debugMode !== undefined && mapObj.debugMode){
+            let floater = select('.block-mapping-floater');
+            floater.style.display = 'inline-block';
+            let top = (x+1)*blockObj.size.xSize + "px", left = (y+1)*blockObj.size.ySize + "px";
 
-        let bodyFloater, headerFloater;
-        headerFloater = "<div align='center' style='text-decoration: underline'>Position</div>";
-        bodyFloater = headerFloater + "<div>".concat(
-            "X: ", x,"<br>",
-            "Y: ", y, "<br>",
-            "Top: ", top,"<br>",
-            "Left: ", left,"<br>",
-            "</div>"
-        );
-        _writeEl(floater, bodyFloater);
-        clearTimeout(timeOutFloater);
-        timeOutFloater = setTimeout(()=>{
-            floater.style.display = 'none';
-        }, 5000);
+            let bodyFloater, headerFloater;
+            headerFloater = "<div align='center' style='text-decoration: underline'>Position</div>";
+            bodyFloater = headerFloater + "<div>".concat(
+                "X: ", x,"<br>",
+                "Y: ", y, "<br>",
+                "Left: ", top,"<br>",
+                "Top: ", left,"<br>",
+                "</div>"
+            );
+            _writeEl(floater, bodyFloater);
+            clearTimeout(timeOutFloater);
+            timeOutFloater = setTimeout(()=>{
+                // floater.style.display = 'none';
+            }, 5000);
+        }
+
+        let player = select(".player-"+mapObj.playerId);
+        player.objectType = "player";
+        mapObj.moveObjectTo(player, {x: x, y: y});
     },
     showNotif(text, displayTime){
         let notifier = select('.block-mapping-floater');
@@ -101,26 +107,27 @@ function _finishEvent(mapObj){
         }
         mapObj._setConfigBlock(block, obj.position.x+"."+obj.position.y);
         block.onclick = ()=>{
-            if(mapObj.debugMode !== undefined && mapObj.debugMode){
-                _blockMapObj.moveListener(obj.position.x, obj.position.y, obj, block);
-            }
-            let sum = 100/(mapObj.size.totalY);
-            let zoomCount = 100 - Math.round((obj.position.y+1) * sum);
-            if(mapObj.size.scalePercent == undefined){
-                mapObj.size.scalePercent = 0;
-            }
-            let loopSum = Math.round(zoomCount/10);
-            if(String(zoomCount).length == 1)return _blockMapObj.zoom('out', mapObj);
-            for(let obj of new Array(loopSum)){
-                if(mapObj.size.scalePercent/10 < loopSum){
-                    _blockMapObj.zoom('in', mapObj);
-                }else{
-                    _blockMapObj.zoom('out', mapObj);
-                }
-            }
+            _blockMapObj.moveListener(obj.position.x, obj.position.y, obj, block, mapObj);
 
-            let top = ((obj.position.x+1)*obj.size.xSize)/mapObj.size.scale, left = ((obj.position.y+1)*obj.size.ySize)/mapObj.size.scale;
-            window.scrollTo(top.toFixed(), left.toFixed());
+            if(this.mode3D){
+                let sum = 100/(mapObj.size.totalY);
+                let zoomCount = 100 - Math.round((obj.position.y+1) * sum);
+                if(mapObj.size.scalePercent == undefined){
+                    mapObj.size.scalePercent = 0;
+                }
+                let loopSum = Math.round(zoomCount/10);
+                if(String(zoomCount).length == 1)return _blockMapObj.zoom('out', mapObj);
+                for(let obj of new Array(loopSum)){
+                    if(mapObj.size.scalePercent/10 < loopSum){
+                        _blockMapObj.zoom('in', mapObj);
+                    }else{
+                        _blockMapObj.zoom('out', mapObj);
+                    }
+                }
+    
+                let top = ((obj.position.x+1)*obj.size.xSize)/mapObj.size.scale, left = ((obj.position.y+1)*obj.size.ySize)/mapObj.size.scale;
+                window.scrollTo(top.toFixed(), left.toFixed());
+            }
         };
         idx++;
     }
@@ -163,11 +170,38 @@ function createMap(selection, mapOption, blockOption){
         blockConfig: {
             list: []
         },
-        debugMode: mapOption.debugMode
+        mode3D: false,
+        debugMode: mapOption.debugMode,
+        playerId: undefined
     }
     mapObj._createBreak = function(){
         let breakEl = document.createElement("BR");
         mapEl.appendChild(breakEl);
+    }
+    mapObj.setPlayer = function(id, option){
+        let player = document.createElement('player');
+        player.className = "player player-" + id;
+        player.id = id;
+        player.style.width = option.width + option.sizeType;
+        player.style.height = option.height + option.sizeType;
+        this.playerId = id;
+        player.style.backgroundImage = "url("+option.srcUrl+")";
+        mapObj.player = {
+            width: option.width, 
+            height: option.height, 
+        }
+
+        let name = document.createElement("div");
+        name.className = "player-name";
+        name.innerText = option.playerName == undefined ? "???" : option.playerName; 
+        player.appendChild(name)
+        this.mainEl().appendChild(player);
+        player.objectType = "player";
+        if(option.position == undefined){
+            this.moveObjectTo(player , {x: 1, y: 1});
+        }else{
+            this.moveObjectTo(player , option.position);
+        }
     }
     mapObj._setBlockOption = function(blockObj){
         let style = blockObj.style;
@@ -313,11 +347,11 @@ function createMap(selection, mapOption, blockOption){
 
         this._processXYCollection();
         _finishEvent(this);
-        mapObj.generateWall();
 
         if(this.size.perspective == undefined){
             mapObj.perSpectiveMode(false);
         }else{
+            mapObj.generateWall();
             mapObj.perSpectiveMode(true);
             mainEl().parentElement.style.perspective = this.size.perspective + this.size.sizeType;
         }
@@ -354,9 +388,11 @@ function createMap(selection, mapOption, blockOption){
         let elParent = select(mapObj.id).parentElement;
         let el = select(mapObj.id);
         if(bool){
+            mapObj.mode3D = true;
             elParent.className += " body-perspective";
             el.className += " perspective-class";
         }else{
+            mapObj.mode3D = false;
             elParent.className = elParent.className.replace(" body-perspective", "");
             el.className = el.className.replace(" perspective-class", "");
         }
@@ -411,6 +447,15 @@ function createMap(selection, mapOption, blockOption){
 
     // object mover
 
+    mapObj.move2D = function(objData, cordinateObj){
+        let mapPosition = _blockMapObj.getPosition(cordinateObj.x, cordinateObj.y , this);
+        _styleConfigure(objData, {
+            left: mapPosition.leftInt - this.size.xBlockSize - (cordinateObj.x  * (mapObj.blockOption.borderSize * 2)) + 'px',
+            top: mapPosition.topInt - (this.player.height/2) + 'px',
+        });
+        // window.moveTo(mapPosition.leftInt, mapPosition.topInt)
+    }
+
     mapObj.moveCube = function(objData, cordinateObj){
         let mapPosition = _blockMapObj.getPosition(cordinateObj.x, cordinateObj.y , this);
         _styleConfigure(objData, {
@@ -456,6 +501,8 @@ function createMap(selection, mapOption, blockOption){
     mapObj.moveObjectTo = function(objData, cordinateObj){
         if(objData.objectType == 'cube'){
             mapObj.moveCube(objData, cordinateObj);
+        }else if(objData.tagName == "PLAYER"){
+            mapObj.move2D(objData, cordinateObj)
         }
     }
 

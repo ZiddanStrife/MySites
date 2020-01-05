@@ -7,12 +7,12 @@ module.exports = {
     },
     plugins: [
       new CopyPlugin([
-        { from: 'V1', to: 'V1' },
-        { from: 'app', to: 'app' },
-        { from: 'src', to: 'src' },
+        { from: 'dist', to: "../production" },
       ]),
       new CopyPlugin([
-        { from: 'dist', to: "../production" },
+        { from: 'V1', to: 'V1' },
+        { from: 'allApp', to: 'allApp' },
+        { from: 'src', to: 'src' },
       ])
     ],
     mode: "development",
@@ -27,5 +27,25 @@ module.exports = {
         // 'subdomain2.host.com',
         // 'host2.com'
       ]
-    }
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/i,
+          loader: 'css-loader',
+          options: {
+            url: true,
+          },
+        },
+        {
+          test: /\.html$/,
+          use: [ {
+            loader: 'html-loader',
+            options: {
+              minimize: true
+            }
+          }],
+        }
+      ],
+    },
   }

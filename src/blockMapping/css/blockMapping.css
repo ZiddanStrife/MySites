@@ -128,3 +128,24 @@ html{
     box-sizing: border-box;
 }
 
+.player{
+    display: inline-block;
+    /* background: red; */
+    position: absolute;
+    /* box-shadow: 0px 25px 8px 0px rgba(0,0,0, 0.5); */
+    transition: left 1s, top 1s;
+    background-size: cover;
+}
+.player-name{
+    text-align: center;
+    position: relative;
+    top: -25px;
+    width: fit-content;
+    background: rgba(225,225,225,0.5);
+    height: 10px;
+    font-size: 15px;
+    white-space: pre;
+    padding: 10px 2px 5px 2px;
+    line-height: 10px;
+    min-width: 90%;
+}
