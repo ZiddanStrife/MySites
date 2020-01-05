@@ -1,0 +1,130 @@
+.block-map-item{
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+    position: relative;
+}
+.block-map-item:active{
+    /* box-shadow: inset -5px -15px 25px 1px gray; */
+    /* background: red; */
+    border-color: white;
+}
+.block-mapping-floater{
+    border: 1px solid white;
+    opacity: 0.7;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    padding: 15px;
+    box-shadow: 5px 5px 10px 0 rgba(0,0,0,0.5);
+    border-radius: 10px;
+    position: fixed;
+    display: none;
+    transition: display 1s, top 0.5s, left 0.5s, transform 1s;
+    right: 1px;
+    top: 1px;
+}
+
+*{
+    font-size: large;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: 100;
+}
+
+.block-map-item.ceramic-blue{
+    box-shadow: inset -5px -15px 25px 1px blue;
+    background: white;
+}
+.block-map-item.ceramic-green{
+    box-shadow: inset -5px -15px 25px 1px green;
+    background: gray;
+}
+.block-map-item.ceramic-white{
+    box-shadow: inset -5px -15px 25px 1px white;
+    background: gray;
+}
+
+.perspective-class{
+    transform: rotateX(90deg) translateZ(100px);
+    display: inline-block;
+    
+    position: absolute;
+}
+.body-perspective{
+    /* perspective: 1000px; */
+    padding: 10% 20%;
+    position: relative;
+    perspective-origin: 70% -30%;
+    transform: scale(0.7);
+    display: inline-block;
+    width: 100%;
+    height: min-content;
+    transform-style: preserve-3d;
+    transition: transform 1s;
+}
+
+.flag{
+    display: inline-block;
+    width: 10px;
+    height: 100px;
+    position: absolute;
+    background: black;
+    bottom: 60px;
+    left: 10px;
+    transform: rotate3d(-5, 15, -6, 90deg) rotateY(80deg);
+}
+
+.wall{
+    display: inline-block;
+    position: absolute;
+    background: deepskyblue;
+}
+body{
+    background: deepskyblue;
+    width: 1248px;
+}
+html{
+    scroll-behavior: smooth;
+}
+
+.block-map-zoomer{
+    display: inline-block;
+    width: 50px;
+    height: auto;
+    border: 5px solid gray;
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    border-radius: 15px;
+    cursor: pointer;
+    background: white;
+    transform: scale(0.6);
+}
+.block-map-zoomer-item:nth-child(1){
+    border-bottom: 1px solid black;
+}
+.block-map-zoomer-item:active{
+    background: gray;
+    color: white;
+}
+
+.block-map-zoomer-item{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+    font-size: x-large;
+}
+
+.standar-object-media{
+    position: absolute;
+}
+.standar-object-class{
+    position: relative;
+}
+.standar-object-face{
+    position: absolute;
+    box-sizing: border-box;
+}
+
